@@ -1,0 +1,81 @@
+<html>
+<head>
+  <title>juqery&php</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" id="name" placeholder="First Name">
+    <input type="text" id="lname" placeholder="Last Name">
+    <input type="text" id="cont" placeholder="contact">
+    <input type="button" id="sub" value="insert">
+    <table class="table table-dark" id="tbl">
+</table>
+</body>
+  <script type="text/javascript">
+/*$(document).ready(function(){
+
+$('#sub').on('click',function(){
+name=$('#name').val();
+lname=$('#lname').val();
+console.log(name+lname);
+$.ajax({
+    type:'POST',
+    url:'insert.php',
+    data:{name:name,lname:lname,},
+    success:function(t){
+        alert('success');
+}
+});
+});
+});*/
+/*function read(){
+  $.ajax({
+    type:'POST',
+    url:'read.php',
+    success:function(tb) {
+      $('#tbl').html(tb);
+    }
+  });
+}*/
+$(document).ready(function(){
+read();
+$('body').on('click','#del',function(){
+  del=$(this).attr('data-id');
+//alert("clickwa");
+  $.ajax({
+    type:'POST',
+    url:'delete.php',
+    data:{del:del},
+    success:function(j){
+      read();
+    }
+  });
+});
+$('#sub').on('click',function(){
+    name=$('#name').val();
+    lname=$('#lname').val();
+    cont=$('#cont').val();
+    $.ajax({
+      type:'POST',
+      url:'insert.php',
+      data:{name:name,lname:lname,cont:cont},
+      success:function(p){
+        alert('pooja bansal');
+    read();
+      }
+    });
+  });
+});
+function read(){
+  $.ajax({
+    type:'POST',
+    url:'read.php',
+    success:function(b){
+      $('#tbl').html(b);
+    }
+  });
+}
+</script>
+
+</html>

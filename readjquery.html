@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="main">
+  <input type="text" id="name" placeholder="Name">
+  <input type="text" id="lname" placeholder="Last Name">
+  <input type="text" id="cont" placeholder="contact">
+
+  <input type="button" id="sub" value="insert">
+  </div>
+  <div id="main1"></div>
+  <table class="table table-dark" id="tb"></table>
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+  read();
+  $('body').on('click','#sub',function(){
+    name=$('#name').val();
+    lname=$('#lname').val();
+    cont=$('#cont').val();
+    console.log(name+lname+cont);
+    $.ajax({
+      type:'POST',
+        url:'insert.php',
+      data:{name:name,lname:lname,cont:cont},
+      success:function(j){
+        read();
+        $('#name').val('');
+        $('#lname').val('');
+        $('#cont').val('');
+      }
+    });
+  });
+  $('body').on('click','#del',function(){
+    del=$(this).attr('data-id');
+      //alert('hjhjh');
+            $.ajax({
+        type:'POST',
+        url:'delete.php',
+        data:{del:del},
+        success:function(k){
+          //alert('delete'),
+          read();
+        }
+      });
+  });
+
+
+$('body').on('click','#edt',function(){
+  edt=$(this).attr('data-id');
+  //alert(edt);
+  $.ajax({
+type:'POST',
+url:'edit.php',
+data:{edt:edt},
+success:function(l){
+  $('#main').css('display','none');
+  $('#main1').html(l);
+  //alert(l);
+
+
+}
+});
+});
+
+$('body').on('click','#upd',function(){
+  id=$('#upd').attr('data-id');
+name=$('#uname').val();
+lname=$('#ulname').val();
+cont=$('#ucont').val();
+  //alert(id+name+lname+cont);
+
+  $.ajax({
+    type:'POST',
+    url:'update.php',
+    data:{id:id,name:name,lname:lname,cont:cont},
+    success:function(a){
+    //  alert("updated");
+
+      $('#main1').css('display','none');
+      $('#main').css('display','block');read();
+      $('#name').val('');
+      $('#lname').val('');
+      $('#cont').val('');
+    }
+  });
+});
+
+
+
+
+});
+
+function read(){
+$.ajax({
+type:'POST',
+url:'read.php',
+success:function(h){
+  $('#tb').html(h);
+}
+});
+}
+</script>
+</html>
